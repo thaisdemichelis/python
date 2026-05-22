@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Template base para as páginas do Flask Menu. 
+     Contém a estrutura básica do HTML, incluindo o menu de navegação e um bloco para o conteúdo específico de cada página. 
+     As páginas individuais estendem este template e preenchem os blocos de título e conteúdo conforme necessário. 
+     
+     O bloco 'title' é usado para definir o título da página, que é exibido na aba do navegador. 
+     O bloco 'content' é onde o conteúdo específico de cada página será inserido. -->
+
+<head>
+
+    <!-- Aqui entra o primeiro Jinja2, que é usado junto com o Flask.
+         A função url_for é utilizada para gerar URLs dinâmicas.
+         Nesse caso, ela gera o caminho para arquivos estáticos, como o CSS. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>{% block title %}{% endblock %} - Flask Menu</title>
+
+</head>
+
+<body>
+    <div class="menu">
+        <nav>
+            <ul>
+                <!-- url_for também é usado para navegar entre rotas do Flask -->
+                <li><a href="{{ url_for('index') }}">Home - Quem sou eu?</a></li>
+                <li><a href="{{ url_for('page1') }}">Projetos para o futuro</a></li>
+                <li><a href="{{ url_for('page2') }}">O que eu gosto de fazer?</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+
+</html>
