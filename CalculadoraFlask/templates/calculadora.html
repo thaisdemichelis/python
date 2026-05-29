@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div id="calculator">
+        <h1>Calculadora</h1>
+        <form method="POST" action="{{ url_for('index') }}">
+            <div class="form-grupo">
+                <label for="operacao">Operação</label>
+                <select id="operacao" name="operacao" required onchange="atualizarCampos()">
+                    <option value="+">Somar</option>
+                    <option value="-">Subtrair</option>
+                    <option value="*">Multiplicar</option>
+                    <option value="/">Dividir</option>
+                    <option value="**">Potência</option>
+                    <option value="sqrt">Raiz quadrada</option>
+                    <option value="bhaskara">Bhaskara</option>
+                </select>
+            </div>
+
+            <div class="form-grupo" id="grupo-num1">
+                <label for="num1">Primeiro número</label>
+                <input type="number" id="num1" name="num1" step="any" value="{{ request.form.get('num1', '') }}">
+            </div>
+
+            <div class="form-grupo" id="grupo-num2">
+                <label for="num2">Segundo número</label>
+                <input type="number" id="num2" name="num2" step="any" value="{{ request.form.get('num2', '') }}">
+            </div>
+
+            <div class="form-grupo" id="grupo-bhaskara" style="display: none;">
+                <label for="a">a</label>
+                <input type="number" id="a" name="a" step="any" value="{{ request.form.get('a', '') }}">
+                <label for="b">b</label>
+                <input type="number" id="b" name="b" step="any" value="{{ request.form.get('b', '') }}">
+                <label for="c">c</label>
+                <input type="number" id="c" name="c" step="any" value="{{ request.form.get('c', '') }}">
+            </div>
+
+            <button type="submit">Calcular</button>
+        </form>
+
+        {% if etapas %}
+        <div class="resultado">
+            <strong>Resultado:</strong><br>
+            <div>{{ etapas|safe }}</div>
+            <div>{{ resultados|safe }}</div>
+        </div>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}">Limpar</a>
+    </div>
+
+    <script>
+        function atualizarCampos() {
+            const op = document.getElementById("operacao").value;
+            const g1 = document.getElementById("grupo-num1");
+            const g2 = document.getElementById("grupo-num2");
+            const gb = document.getElementById("grupo-bhaskara");
+
+            if (op === "bhaskara") {
+                g1.style.display = "none";
+                g2.style.display = "none";
+                gb.style.display = "block";
+            } else if (op === "sqrt") {
+                g1.style.display = "block";
+                g2.style.display = "none";
+                gb.style.display = "none";
+            } else {
+                g1.style.display = "block";
+                g2.style.display = "block";
+                gb.style.display = "none";
+            }
+        }
+        atualizarCampos();
+    </script>
+</body>
+
+</html>
