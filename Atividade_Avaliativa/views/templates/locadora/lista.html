@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block title %}Locadora{% endblock %}
+
+{% block content %}
+<h1>Locadora de Veículos</h1>
+<p><a class="btn" href="{{ url_for('locadora.cadastrar') }}">+ Nova locação</a></p>
+
+{% if locacoes %}
+<table>
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Veículo</th>
+            <th>Início</th>
+            <th>Fim</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for locacao in locacoes %}
+        <tr>
+            <td>{{ locacao.cliente.nome }}</td>
+            <td>{{ locacao.veiculo.modelo }} [{{ locacao.veiculo.placa }}]</td>
+            <td>{{ locacao.data_inicio.strftime('%d/%m/%Y') }}</td>
+            <td>{{ locacao.data_fim.strftime('%d/%m/%Y') }}</td>
+            <td>R$ {{ "%.2f"|format(locacao.valor_total) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>Nenhuma locação encontrada.</p>
+{% endif %}
+{% endblock %}
