@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Novo Veículo{% endblock %}
+
+{% block content %}
+<h1>Cadastrar Novo Veículo</h1>
+
+<form method="POST" action="{{ url_for('locadora.cadastrar_veiculo') }}">
+    <div class="form-grupo">
+        <label>Modelo do Carro</label>
+        <input type="text" name="modelo" placeholder="Ex: Hyundai HB20 1.0" required>
+    </div>
+    
+    <div class="form-grupo">
+        <label>Placa</label>
+        <input type="text" name="placa" placeholder="Ex: QQX-3A12" required>
+    </div>
+    
+    <div class="form-grupo">
+        <label>Valor da Diária (R$)</label>
+        <input type="number" name="diaria" step="0.01" min="0" placeholder="Ex: 120.00" required>
+    </div>
+    
+    <button type="submit" style="background-color: #28a745;">Salvar Veículo</button>
+</form>
+
+<p><a href="{{ url_for('locadora.cadastrar') }}">← Cancelar e Voltar</a></p>
+{% endblock %}

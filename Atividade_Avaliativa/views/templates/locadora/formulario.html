@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block title %}Nova locação{% endblock %}
+
+{% block content %}
+<h1>Nova locação</h1>
+
+<form method="POST" action="{{ url_for('locadora.cadastrar') }}">
+    
+    <div class="form-grupo">
+        <label>Cliente</label>
+        <select name="cliente_id" required>
+            <option value="">Selecione um cliente...</option>
+            {% for c in clientes %}
+                <option value="{{ c.id }}">{{ c.nome }} (CPF: {{ c.cpf }})</option>
+            {% endfor %}
+        </select>
+        <p style="margin-top: 5px;"><a href="{{ url_for('locadora.cadastrar_cliente') }}" style="color: #007bff; font-size: 14px; text-decoration: none;">+ Não encontrou? Cadastrar novo cliente</a></p>
+    </div>
+    
+    <div class="form-grupo">
+        <label>Veículo</label>
+        <select name="veiculo_id" required>
+            <option value="">Selecione um veículo...</option>
+            {% for v in veiculos %}
+                <option value="{{ v.id }}">{{ v.modelo }} [Placa: {{ v.placa }}]</option>
+            {% endfor %}
+        </select>
+        <p style="margin-top: 5px;"><a href="{{ url_for('locadora.cadastrar_veiculo') }}" style="color: #007bff; font-size: 14px; text-decoration: none;">+ Não encontrou? Cadastrar novo veículo</a></p>
+    </div>
+    
+    <div class="form-grupo">
+        <label>Data início</label>
+        <input type="date" name="data_inicio" required>
+    </div>
+    
+    <div class="form-grupo">
+        <label>Data fim</label>
+        <input type="date" name="data_fim" required>
+    </div>
+    
+    <div class="form-grupo">
+        <label>Valor total final (R$)</label>
+        <input type="number" name="valor_total" step="0.01" min="0" placeholder="Ex: 150.00" required>
+    </div>
+    
+    <button type="submit">Salvar Registro de Locação</button>
+</form>
+
+<p><a href="{{ url_for('locadora.index') }}">← Cancelar e Voltar</a></p>
+{% endblock %}
